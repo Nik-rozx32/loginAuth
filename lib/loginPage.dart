@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'register_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,8 +22,9 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text.trim(),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Welcome ${userCredential.user?.email}')),
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       String msg = "Login Failed";
@@ -76,7 +79,18 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black, foregroundColor: Colors.white),
               onPressed: _login,
-              child: Text('Login'))
+              child: Text('Login')),
+          SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                );
+              },
+              child: Text("Don't have an Account? Sign in"))
         ]),
       ),
     );
